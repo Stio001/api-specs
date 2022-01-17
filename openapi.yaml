@@ -1,0 +1,4685 @@
+openapi: 3.0.1
+info:
+  title: HIPAA.Api.Mock - V1
+  version: 1.0.82
+paths:
+  /api/v1/accounts/billing_information:
+    get:
+      tags:
+        - Account
+      summary: Get billing information for current account
+      operationId: GetBillingInformationV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BillingInformation'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingInformation'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BillingInformation'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/accounts/billing_address:
+    patch:
+      tags:
+        - Account
+      summary: Edit billing address for current account
+      operationId: EditBillingAddressV1
+      requestBody:
+        description: Billing Address Request dto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingAddressRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/BillingAddressRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/BillingAddressRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/accounts/payment_methods:
+    get:
+      tags:
+        - Account
+      summary: List payment methods for current account
+      operationId: ListPaymentMethodsV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+    post:
+      tags:
+        - Account
+      summary: Add payment method for current account
+      description: If this is the first payment method added, then it becomes default.
+      operationId: CreatePaymentMethodV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentMethodRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentMethodRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentMethodRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/accounts/payment_methods/{paymentMethodId}:
+    delete:
+      tags:
+        - Account
+      summary: Delete payment method
+      operationId: DeletePaymentMethodV1
+      parameters:
+        - name: paymentMethodId
+          in: path
+          description: Id of payment method
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/accounts/payment_methods/{paymentMethodId}/set_default:
+    patch:
+      tags:
+        - Account
+      summary: Set default payment method for current account
+      operationId: SetDefaultPaymentMethodV1
+      parameters:
+        - name: paymentMethodId
+          in: path
+          description: Id of payment method
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodsInformation'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/accounts/package_prices/{priceId}:
+    patch:
+      tags:
+        - Account
+      summary: Select package price
+      operationId: EditPackagePriceV1
+      parameters:
+        - name: priceId
+          in: path
+          description: Id of price
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/accounts/review_billing_information:
+    get:
+      tags:
+        - Account
+      summary: Get review billing information
+      operationId: GetReviewBillingInformationV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ReviewBillingInformationResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewBillingInformationResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ReviewBillingInformationResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+    patch:
+      tags:
+        - Account
+      summary: Edit review billing information
+      operationId: EditReviewBillingInformationV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/accounts/business_information:
+    get:
+      tags:
+        - Account
+      summary: Get business information
+      operationId: GetBusinessInformationV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BusinessInformation'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessInformation'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BusinessInformation'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+    patch:
+      tags:
+        - Account
+      summary: Edit business information
+      operationId: EditBusinessInformationV1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessInformation'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/BusinessInformation'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/BusinessInformation'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/accounts/baa_agreement:
+    get:
+      tags:
+        - Account
+      summary: Get baa agreement
+      operationId: GetBaaAgreementV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BaaAgreement'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaaAgreement'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BaaAgreement'
+        '204':
+          description: No signature
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+    patch:
+      tags:
+        - Account
+      summary: Edit baa agreement
+      operationId: EditBaaAgreementV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BaaAgreement'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/BaaAgreement'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/BaaAgreement'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/accounts/team/search:
+    post:
+      tags:
+        - Account
+      summary: Search Team
+      operationId: SearchTeamV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/TeamRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/TeamRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/accounts/payment_history:
+    post:
+      tags:
+        - Account
+      summary: Search Payment History
+      operationId: SearchPaymentHistoryV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchPaymentHistoryRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SearchPaymentHistoryRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SearchPaymentHistoryRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SearchPaymentHistoryResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchPaymentHistoryResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SearchPaymentHistoryResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/account/workflows:
+    get:
+      tags:
+        - AccountWorkflow
+      summary: List workflows for current account
+      operationId: ListWorkflowsV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ListWorkflowsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWorkflowsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ListWorkflowsResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+    post:
+      tags:
+        - AccountWorkflow
+      summary: Create workflow
+      operationId: CreateWorkflowV1
+      requestBody:
+        description: FormModel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkflowRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkflowRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/account/workflows/{workflowId}:
+    get:
+      tags:
+        - AccountWorkflow
+      summary: Get workflow by id and version
+      operationId: GetWorkflowV1
+      parameters:
+        - name: workflowId
+          in: path
+          description: Id of form
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: versionId
+          in: query
+          description: >-
+            Id of version. If no version is specified, the latest one will be
+            returned.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+    patch:
+      tags:
+        - AccountWorkflow
+      summary: Create new workflow version
+      operationId: EditWorkflowV1
+      parameters:
+        - name: workflowId
+          in: path
+          description: Id of workflow
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Form model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/EditWorkflowResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditWorkflowResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/EditWorkflowResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/account/workflows/{workflowId}/publish:
+    patch:
+      tags:
+        - AccountWorkflow
+      summary: Create new version and publish
+      operationId: PublishWorkflowV1
+      parameters:
+        - name: workflowId
+          in: path
+          description: Id of workflow
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Form model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PublishWorkflowResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishWorkflowResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PublishWorkflowResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/account/workflows/{workflowId}/unpublish:
+    patch:
+      tags:
+        - AccountWorkflow
+      summary: Unpublish workflow
+      operationId: UnpublishWorkflowV1
+      parameters:
+        - name: workflowId
+          in: path
+          description: Id of workflow
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/account/workflows/{workflowId}/versions:
+    get:
+      tags:
+        - AccountWorkflow
+      summary: List all workflow versions
+      operationId: ListWorkflowVersionsV1
+      parameters:
+        - name: workflowId
+          in: path
+          description: Id of workflow
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkflowVersionShortInfo'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkflowVersionShortInfo'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkflowVersionShortInfo'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/account/workflows/{workflowId}/versions/{versionId}/publish:
+    patch:
+      tags:
+        - AccountWorkflow
+      summary: Publish selected workflow version
+      operationId: PublishWorkflowByVersionV1
+      parameters:
+        - name: workflowId
+          in: path
+          description: Id of form
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: versionId
+          in: path
+          description: Id of version
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/address/search:
+    post:
+      tags:
+        - Address
+      summary: Search Addresses
+      operationId: SearchAddressesV1
+      parameters:
+        - name: search
+          in: query
+          description: search string
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrintedAddress'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrintedAddress'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrintedAddress'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/address/{addressId}:
+    get:
+      tags:
+        - Address
+      summary: Get Address
+      operationId: GetAddressV1
+      parameters:
+        - name: addressId
+          in: path
+          description: Id of address
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Address'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/admin/templates:
+    get:
+      tags:
+        - AdminTemplate
+      summary: List All Templates
+      operationId: ListAllTemplatesV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateDto'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateDto'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateDto'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+    post:
+      tags:
+        - AdminTemplate
+      summary: Create Template
+      operationId: CreateTemplateV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTemplateRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateTemplateRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateTemplateRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/admin/templates/{templateId}:
+    get:
+      tags:
+        - AdminTemplate
+      summary: Get template by id and version
+      operationId: GetTemplateV1
+      parameters:
+        - name: templateId
+          in: path
+          description: Id of template
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: versionId
+          in: query
+          description: >-
+            Id of version. If no version is specified, the latest one will be
+            returned.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+    patch:
+      tags:
+        - AdminTemplate
+      summary: Create new template version
+      operationId: EditTemplateV1
+      parameters:
+        - name: templateId
+          in: path
+          description: Id of template
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Form model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/EditTemplateResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditTemplateResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/EditTemplateResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/admin/templates/{templateId}/publish:
+    patch:
+      tags:
+        - AdminTemplate
+      summary: Create new version and publish
+      operationId: PublishTemplateV1
+      parameters:
+        - name: templateId
+          in: path
+          description: Id of template
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Form model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/FormBuilderData'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PublishTemplateResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishTemplateResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PublishTemplateResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/admin/templates/{templateId}/unpublish:
+    patch:
+      tags:
+        - AdminTemplate
+      summary: Unpublish template
+      operationId: UnpublishTemplateV1
+      parameters:
+        - name: templateId
+          in: path
+          description: Id of template
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/admin/templates/{templateId}/versions:
+    get:
+      tags:
+        - AdminTemplate
+      summary: List all template versions
+      operationId: ListTemplateVersionsV1
+      parameters:
+        - name: templateId
+          in: path
+          description: Id of template
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateVersionShortInfo'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateVersionShortInfo'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateVersionShortInfo'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/admin/templates/{templateId}/title:
+    patch:
+      tags:
+        - AdminTemplate
+      summary: Edit Template Title
+      operationId: EditTemplateTitleV1
+      parameters:
+        - name: templateId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: title
+          in: query
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/admin/templates/{templateId}/image:
+    patch:
+      tags:
+        - AdminTemplate
+      summary: Edit Template Image
+      operationId: EditTemplateImageV1
+      parameters:
+        - name: templateId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: image
+          in: query
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/workflows/search:
+    post:
+      tags:
+        - Dashboard
+      summary: Search workflow
+      operationId: SearchWorkflowV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchWorkflowRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SearchWorkflowRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SearchWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SearchWorkflowResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchWorkflowResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SearchWorkflowResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/workflows/{workflowId}/title:
+    patch:
+      tags:
+        - Dashboard
+      summary: Edit Workflow Title
+      operationId: EditWorkflowTitleV1
+      parameters:
+        - name: workflowId
+          in: path
+          description: Id of workflow
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditWorkflowTitleRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/EditWorkflowTitleRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/EditWorkflowTitleRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/workflows/move_to_folder:
+    post:
+      tags:
+        - Dashboard
+      summary: Move to folder
+      operationId: MoveToFolderBatchV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveToFolderRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/MoveToFolderRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/MoveToFolderRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/workflows/publish:
+    post:
+      tags:
+        - Dashboard
+      summary: Publish workflows
+      operationId: PublishWorkflowBatchV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishWorkflowRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PublishWorkflowRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PublishWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/workflows/unpublish:
+    post:
+      tags:
+        - Dashboard
+      summary: Unpublish workflows
+      operationId: UnpublishWorkflowBatchV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnpublishWorkflowRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UnpublishWorkflowRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UnpublishWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/workflows/delete:
+    post:
+      tags:
+        - Dashboard
+      summary: Delete workflows
+      operationId: DeleteWorkflowBatchV1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteWorkflowRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/DeleteWorkflowRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/DeleteWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/workflows/archive:
+    post:
+      tags:
+        - Dashboard
+      summary: Archive  workflow
+      operationId: ArchiveWorkflowBatchV1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArchiveWorkflowRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ArchiveWorkflowRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ArchiveWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/workflows/unarchive:
+    post:
+      tags:
+        - Dashboard
+      summary: Unarchive Workflow Batch
+      operationId: UnarchiveWorkflowBatchV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnarchiveWorkflowRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UnarchiveWorkflowRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UnarchiveWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/workflows/{workflowId}/submissions/search_by_options:
+    get:
+      tags:
+        - Dashboard
+      summary: Get Search By Options
+      operationId: GetSearchByOptionsV1
+      parameters:
+        - name: workflowId
+          in: path
+          description: Id of workflow
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+            text/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/workflows/{workflowId}/submissions/search:
+    post:
+      tags:
+        - Dashboard
+      summary: Search Submission
+      operationId: SearchSubmissionV1
+      parameters:
+        - name: workflowId
+          in: path
+          description: Id of workflow
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchSubmissionRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SearchSubmissionRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SearchSubmissionRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SearchSubmissionResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchSubmissionResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SearchSubmissionResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/folders:
+    post:
+      tags:
+        - Dashboard
+      summary: Create Folder
+      operationId: CreateFolderV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFolderRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateFolderRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateFolderRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Folder'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Folder'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Folder'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+    get:
+      tags:
+        - Dashboard
+      summary: List Folders for current account
+      operationId: ListFoldersV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ListFoldersResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFoldersResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ListFoldersResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/dashboard/folders/{folderId}:
+    delete:
+      tags:
+        - Dashboard
+      summary: Delete Folder for current account
+      operationId: DeleteFolderV1
+      parameters:
+        - name: folderId
+          in: path
+          description: Id of folder
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Folder'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Folder'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Folder'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/developer/general_information:
+    get:
+      tags:
+        - Developer
+      summary: Get General Information for current account
+      operationId: GetGeneralInformationV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GeneralInformationResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralInformationResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GeneralInformationResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+    patch:
+      tags:
+        - Developer
+      summary: Edit General Information
+      operationId: EditGeneralInformationV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GeneralInformationRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/GeneralInformationRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/GeneralInformationRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/packages:
+    get:
+      tags:
+        - Package
+      summary: List available packages
+      operationId: ListPackagesV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Package'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Package'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Package'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '500':
+          description: Internal server error
+  /api/v1/account/{accountId}/published_workflows:
+    get:
+      tags:
+        - PublicAccount
+      summary: List Published Workflows
+      operationId: ListPublishedWorkflowsV1
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ListWorkflowsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWorkflowsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ListWorkflowsResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '500':
+          description: Internal server error
+  /api/v1/subscription:
+    get:
+      tags:
+        - Subscription
+      summary: Get Subscription Info for current account
+      operationId: GetSubscriptionInfoV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/subscription/cancel_renewal:
+    patch:
+      tags:
+        - Subscription
+      summary: Cancel renewal subscription for current account
+      operationId: EditCancelRenewalV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/subscription/resume_renewal:
+    patch:
+      tags:
+        - Subscription
+      summary: Resume renewal subscription for current account
+      operationId: EditResumeRenewalV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/subscription/skip_trial:
+    patch:
+      tags:
+        - Subscription
+      summary: Skip trial
+      operationId: EditSkipTrialV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/subscription/keep_current_subscription:
+    patch:
+      tags:
+        - Subscription
+      summary: Cancels future changes
+      operationId: EditKeepCurrentSubscriptionV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInformation'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/templates/search:
+    post:
+      tags:
+        - Template
+      summary: Search Templates
+      operationId: SearchTemplatesV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchTemplatesRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SearchTemplatesRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SearchTemplatesRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SearchTemplatesResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchTemplatesResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SearchTemplatesResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/templates/{templateId}:
+    get:
+      tags:
+        - Template
+      summary: Get template preview
+      operationId: GetTemplatePreviewV1
+      parameters:
+        - name: templateId
+          in: path
+          description: Id of template
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/users/current_user:
+    get:
+      tags:
+        - User
+      summary: Get current user by provided token
+      operationId: GetCurrentUserV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/users/specializations:
+    get:
+      tags:
+        - User
+      summary: Get Specializations for user
+      operationId: GetSpecializationsV1
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SpecializationsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecializationsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SpecializationsResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+    patch:
+      tags:
+        - User
+      summary: Edit Specializations for user
+      operationId: EditSpecializationsV1
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpecializationsRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SpecializationsRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SpecializationsRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SpecializationsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecializationsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SpecializationsResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+      security:
+        - Authorization: []
+  /api/v1/workflows/{workflowId}:
+    get:
+      tags:
+        - Workflow
+      summary: Get workflow view
+      operationId: GetWorkflowViewV1
+      parameters:
+        - name: workflowId
+          in: path
+          description: Id of workflow
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FormBuilderData'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '500':
+          description: Internal server error
+  /api/v1/workflows/{workflowId}/versions/{versionId}/submit_form:
+    post:
+      tags:
+        - Workflow
+      summary: Submit form data
+      operationId: SubmitFormV1
+      parameters:
+        - name: workflowId
+          in: path
+          description: Id of workflow
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: versionId
+          in: path
+          description: Id of version form
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: request
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          text/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          application/*+json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        streetName1:
+          maxLength: 200
+          type: string
+          description: Street name first line
+          nullable: true
+          example: Example first line
+        streetName2:
+          maxLength: 200
+          type: string
+          description: Street name second line
+          nullable: true
+          example: example second line
+        city:
+          maxLength: 100
+          type: string
+          description: City
+          nullable: true
+          example: Toronto
+        state:
+          maxLength: 100
+          type: string
+          description: State/Province
+          nullable: true
+          example: Ontario
+        zipCode:
+          maxLength: 20
+          type: string
+          description: Zip code/Postal code
+          nullable: true
+          example: F3A 4F2
+        country:
+          $ref: '#/components/schemas/Country'
+      additionalProperties: false
+      description: Address dto
+    AlignmentType:
+      enum:
+        - Left
+        - Center
+        - Right
+      type: string
+      description: Alignment type
+    ApplicationError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message
+          nullable: true
+          example: Something went wrong.
+        type:
+          $ref: '#/components/schemas/ErrorType'
+        step:
+          $ref: '#/components/schemas/Step'
+      additionalProperties: false
+      description: Application error
+    ArchiveWorkflowRequest:
+      required:
+        - workflowIds
+      type: object
+      properties:
+        workflowIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Ids workflow for archive
+      additionalProperties: false
+      description: Archive Workflow Request
+    BaaAgreement:
+      type: object
+      properties:
+        signature:
+          type: string
+          description: Signature (base64)
+          nullable: true
+      additionalProperties: false
+      description: Baa Agreement
+    BasicElementType:
+      enum:
+        - Title
+        - Select
+        - CheckboxGroup
+        - RadioGroup
+        - Input
+        - PhoneInput
+        - InputNumber
+        - Checkbox
+        - Paragraph
+        - Textarea
+        - Signature
+        - Email
+        - DatePicker
+        - Ssn
+        - MaskedInput
+      type: string
+      description: Type of element
+    BillingAddressForm:
+      required:
+        - billingAddress
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: First name
+          nullable: true
+          example: Todd
+        lastName:
+          type: string
+          description: Last name
+          nullable: true
+          example: Howard
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+      additionalProperties: false
+      description: Billing Address Form
+    BillingAddressRequest:
+      required:
+        - billingAddress
+        - firstName
+        - lastName
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: First name
+          example: Todd
+        lastName:
+          type: string
+          description: Last name
+          example: Howard
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+      additionalProperties: false
+      description: Billing Address Request
+    BillingInformation:
+      required:
+        - billingAddressForm
+        - paymentMethodsInformation
+      type: object
+      properties:
+        billingAddressForm:
+          $ref: '#/components/schemas/BillingAddressForm'
+        paymentMethodsInformation:
+          $ref: '#/components/schemas/PaymentMethodsInformation'
+        selectedPackage:
+          type: string
+          description: Selected Package
+          format: uuid
+          nullable: true
+      additionalProperties: false
+      description: Billing information model
+    BusinessInformation:
+      type: object
+      properties:
+        businessName:
+          type: string
+          description: Business name
+          nullable: true
+          example: Business Name
+        title:
+          type: string
+          description: Title
+          nullable: true
+          example: Title
+        sameAsBilling:
+          type: boolean
+          description: Same As Billing
+          example: true
+        businessAddress:
+          $ref: '#/components/schemas/Address'
+      additionalProperties: false
+      description: Business information
+    BusinessTypeEnum:
+      enum:
+        - UnknownOption
+      type: string
+      description: Business Types
+    CheckboxGroupProperties:
+      type: object
+      properties:
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/OptionItem'
+          description: Options
+          nullable: true
+        disabled:
+          type: boolean
+          description: Disabled
+          nullable: true
+          example: true
+      additionalProperties: false
+      description: Checkbox group properties
+    CheckboxProperties:
+      type: object
+      properties:
+        children:
+          type: string
+          description: Children
+          nullable: true
+          example: Text
+      additionalProperties: false
+      description: Checkbox properties
+    Country:
+      enum:
+        - AF
+        - AX
+        - AL
+        - DZ
+        - AS
+        - AD
+        - AO
+        - AI
+        - AQ
+        - AG
+        - AR
+        - AM
+        - AW
+        - AU
+        - AT
+        - AZ
+        - BS
+        - BH
+        - BD
+        - BB
+        - BY
+        - BE
+        - BZ
+        - BJ
+        - BM
+        - BT
+        - BO
+        - BA
+        - BW
+        - BV
+        - BR
+        - IO
+        - BN
+        - BG
+        - BF
+        - BI
+        - KH
+        - CM
+        - CA
+        - CV
+        - KY
+        - CF
+        - TD
+        - CL
+        - CN
+        - CX
+        - CC
+        - CO
+        - KM
+        - CG
+        - CD
+        - CK
+        - CR
+        - CI
+        - HR
+        - CU
+        - CY
+        - CZ
+        - DK
+        - DJ
+        - DM
+        - DO
+        - EC
+        - EG
+        - SV
+        - GQ
+        - ER
+        - EE
+        - ET
+        - FK
+        - FO
+        - FJ
+        - FI
+        - FR
+        - GF
+        - PF
+        - TF
+        - GA
+        - GM
+        - GE
+        - DE
+        - GH
+        - GI
+        - GR
+        - GL
+        - GD
+        - GP
+        - GU
+        - GT
+        - GG
+        - GN
+        - GW
+        - GY
+        - HT
+        - HM
+        - VA
+        - HN
+        - HK
+        - HU
+        - IS
+        - IN
+        - ID
+        - IR
+        - IQ
+        - IE
+        - IM
+        - IL
+        - IT
+        - JM
+        - JP
+        - JE
+        - JO
+        - KZ
+        - KE
+        - KI
+        - KP
+        - KR
+        - KW
+        - KG
+        - LA
+        - LV
+        - LB
+        - LS
+        - LR
+        - LY
+        - LI
+        - LT
+        - LU
+        - MO
+        - MK
+        - MG
+        - MW
+        - MY
+        - MV
+        - ML
+        - MT
+        - MH
+        - MQ
+        - MR
+        - MU
+        - YT
+        - MX
+        - FM
+        - MD
+        - MC
+        - MN
+        - MS
+        - MA
+        - MZ
+        - MM
+        - NA
+        - NR
+        - NP
+        - NL
+        - AN
+        - NC
+        - NZ
+        - NI
+        - NE
+        - NG
+        - NU
+        - NF
+        - MP
+        - 'NO'
+        - OM
+        - PK
+        - PW
+        - PS
+        - PA
+        - PG
+        - PY
+        - PE
+        - PH
+        - PN
+        - PL
+        - PT
+        - PR
+        - QA
+        - RE
+        - RO
+        - RU
+        - RW
+        - SH
+        - KN
+        - LC
+        - PM
+        - VC
+        - WS
+        - SM
+        - ST
+        - SA
+        - SN
+        - CS
+        - SC
+        - SL
+        - SG
+        - SK
+        - SI
+        - SB
+        - SO
+        - ZA
+        - GS
+        - ES
+        - LK
+        - SD
+        - SR
+        - SJ
+        - SZ
+        - SE
+        - CH
+        - SY
+        - TW
+        - TJ
+        - TZ
+        - TH
+        - TL
+        - TG
+        - TK
+        - TO
+        - TT
+        - TN
+        - TR
+        - TM
+        - TC
+        - TV
+        - UG
+        - UA
+        - AE
+        - GB
+        - US
+        - UM
+        - UY
+        - UZ
+        - VU
+        - VE
+        - VN
+        - VG
+        - VI
+        - WF
+        - EH
+        - YE
+        - ZM
+        - ZW
+      type: string
+      description: Country
+    CreateFolderRequest:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of folder
+      additionalProperties: false
+      description: Create Folder Request
+    CreatePaymentMethodRequest:
+      required:
+        - stripeId
+      type: object
+      properties:
+        stripeId:
+          type: string
+          description: Stripe id of payment method
+          example: pm_asfrwe324DFstw
+      additionalProperties: false
+      description: Create payment method request
+    CreateTemplateRequest:
+      required:
+        - imageUrl
+        - title
+      type: object
+      properties:
+        specializationId:
+          type: string
+          description: Id of specialization
+          format: uuid
+        title:
+          type: string
+          description: Title of template
+        imageUrl:
+          type: string
+          description: Image url for template
+      additionalProperties: false
+      description: Create Template Request
+    CreateWorkflowRequest:
+      type: object
+      properties:
+        formTypeId:
+          type: string
+          description: Id of form type
+          format: uuid
+          nullable: true
+      additionalProperties: false
+      description: Create workflow request
+    CurrentUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of user
+          format: uuid
+          example: 8118F0C8-29BB-41EC-B9AC-4A442D869A95
+        accountId:
+          type: string
+          description: Id of account
+          format: uuid
+        email:
+          type: string
+          description: Email of user
+          nullable: true
+          example: example@yopmail.com
+        phoneNumber:
+          type: string
+          description: Phone Number
+          nullable: true
+          example: '+12344124421'
+        username:
+          type: string
+          description: Username of user
+          nullable: true
+          example: Becky Oliver
+        emailVerified:
+          type: boolean
+          description: Email Verified Indicator
+        phoneNumberVerified:
+          type: boolean
+          description: Phone Number Verified Indicator
+        role:
+          $ref: '#/components/schemas/Role'
+        subscriptionStatus:
+          $ref: '#/components/schemas/SubscriptionStatus'
+        step:
+          $ref: '#/components/schemas/Step'
+      additionalProperties: false
+      description: Current user dto
+    DatePickerProperties:
+      type: object
+      properties:
+        placeholder:
+          type: string
+          description: Placeholder
+          nullable: true
+          example: 02/21/2015
+        disabled:
+          type: boolean
+          description: Disabled
+          nullable: true
+          example: true
+      additionalProperties: false
+      description: Date Picker Properties
+    DeleteWorkflowRequest:
+      required:
+        - workflowIds
+      type: object
+      properties:
+        workflowIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Ids workflow for delete
+      additionalProperties: false
+      description: Delete Workflow Request
+    DirectionType:
+      enum:
+        - Asc
+        - Desc
+      type: string
+      description: Direction Type
+    DocumentDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name
+          nullable: true
+          example: Invoice
+        url:
+          type: string
+          description: Url
+          nullable: true
+      additionalProperties: false
+      description: DocumentDto
+    EditTemplateResponse:
+      required:
+        - formBuilderData
+        - savedTemplateVersionShortInfo
+      type: object
+      properties:
+        savedTemplateVersionShortInfo:
+          $ref: '#/components/schemas/TemplateVersionShortInfo'
+        formBuilderData:
+          $ref: '#/components/schemas/FormBuilderData'
+      additionalProperties: false
+      description: Edit Template Response
+    EditWorkflowResponse:
+      required:
+        - formBuilderData
+        - savedWorkflowVersionShortInfo
+      type: object
+      properties:
+        savedWorkflowVersionShortInfo:
+          $ref: '#/components/schemas/WorkflowVersionShortInfo'
+        formBuilderData:
+          $ref: '#/components/schemas/FormBuilderData'
+      additionalProperties: false
+      description: Edit workflow response
+    EditWorkflowTitleRequest:
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of workflow
+      additionalProperties: false
+      description: Edit Workflow Title Request
+    EmailProperties:
+      type: object
+      properties:
+        placeholder:
+          type: string
+          description: Placeholder
+          nullable: true
+          example: example@email.com
+        type:
+          type: string
+          description: Type
+          nullable: true
+          example: email
+      additionalProperties: false
+      description: Email properties
+    ErrorType:
+      enum:
+        - Message
+        - WrongStep
+      type: string
+      description: Error Type
+    Feature:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of Feature
+          format: uuid
+        name:
+          type: string
+          description: Name of Feature
+          nullable: true
+          example: Feature Name
+        enabled:
+          type: boolean
+          description: Include in package flag
+      additionalProperties: false
+      description: Feature
+    Folder:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of folder
+          format: uuid
+        name:
+          type: string
+          description: Folder name
+          nullable: true
+      additionalProperties: false
+      description: Folder
+    FormBuilderData:
+      required:
+        - title
+        - versionId
+        - workflowId
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of form
+          example: Test form
+        workflowId:
+          type: string
+          description: Id of workflow
+          format: uuid
+        versionId:
+          type: string
+          description: Id of version
+          format: uuid
+        forms:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormBuilderForm'
+          description: Screens
+          nullable: true
+      additionalProperties: false
+      description: Form model
+    FormBuilderForm:
+      type: object
+      properties:
+        order:
+          type: integer
+          description: Order
+          format: int32
+          example: 0
+        formId:
+          type: string
+          description: Id of screen
+          format: uuid
+          example: 7CB07D5D-D423-483F-81E5-D8B1558AD490
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormBuilderFormRow'
+          description: Rows
+          nullable: true
+        initialValues:
+          type: object
+          additionalProperties: {}
+          description: Initial values
+          nullable: true
+      additionalProperties: false
+      description: Screen model
+    FormBuilderFormColumn:
+      type: object
+      properties:
+        order:
+          type: integer
+          description: Order
+          format: int32
+          example: 0
+        columnId:
+          type: string
+          description: Id of column
+          format: uuid
+          example: 7CB07D5D-D423-483F-81E5-D8B1558AD490
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormBuilderFormElement'
+          description: Elements
+          nullable: true
+      additionalProperties: false
+      description: Column model
+    FormBuilderFormElement:
+      type: object
+      properties:
+        order:
+          type: integer
+          description: Order
+          format: int32
+          example: 0
+        elementId:
+          type: string
+          description: Id of element
+          format: uuid
+          example: 8C78F5CF-DA5D-4D8F-96AE-1731C97D0E73
+        elementType:
+          $ref: '#/components/schemas/BasicElementType'
+        selectProps:
+          $ref: '#/components/schemas/SelectProperties'
+        formItemProps:
+          $ref: '#/components/schemas/FormItemProperties'
+        inputProps:
+          $ref: '#/components/schemas/InputProperties'
+        titleProps:
+          $ref: '#/components/schemas/TitleProperties'
+        checkboxGroupProps:
+          $ref: '#/components/schemas/CheckboxGroupProperties'
+        radioGroupProps:
+          $ref: '#/components/schemas/RadioGroupProperties'
+        emailProps:
+          $ref: '#/components/schemas/EmailProperties'
+        textareaProps:
+          $ref: '#/components/schemas/TextareaProperties'
+        paragraphProps:
+          $ref: '#/components/schemas/ParagraphProperties'
+        checkboxProps:
+          $ref: '#/components/schemas/CheckboxProperties'
+        phoneInputProps:
+          $ref: '#/components/schemas/PhoneInputProperties'
+        inputNumberProps:
+          $ref: '#/components/schemas/InputNumberProperties'
+        datePickerProps:
+          $ref: '#/components/schemas/DatePickerProperties'
+        ssnProperties:
+          $ref: '#/components/schemas/SsnProperties'
+        maskedInputProps:
+          $ref: '#/components/schemas/MaskedInputProperties'
+      additionalProperties: false
+      description: Element model
+    FormBuilderFormRow:
+      type: object
+      properties:
+        order:
+          type: integer
+          description: Order
+          format: int32
+          example: 0
+        rowId:
+          type: string
+          description: Id of row
+          format: uuid
+          example: 7CB07D5D-D423-483F-81E5-D8B1558AD490
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormBuilderFormColumn'
+          description: Columns
+          nullable: true
+        hidden:
+          type: boolean
+          description: Hidden flag
+          nullable: true
+          example: false
+      additionalProperties: false
+      description: Row model
+    FormItemProperties:
+      required:
+        - label
+      type: object
+      properties:
+        label:
+          type: string
+          description: Label
+          example: Label
+        name:
+          type: string
+          description: Name
+          nullable: true
+          example: Name
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuleItem'
+          description: Rules
+          nullable: true
+      additionalProperties: false
+      description: Form item properties
+    GeneralInformationRequest:
+      required:
+        - zipCode
+      type: object
+      properties:
+        zipCode:
+          type: string
+          description: Zip Code / Postal Code
+          example: G4D 2F1
+        businessType:
+          $ref: '#/components/schemas/BusinessTypeEnum'
+        businessName:
+          type: string
+          description: Business Name
+          nullable: true
+          example: Name of business
+      additionalProperties: false
+      description: General Information Request
+    GeneralInformationResponse:
+      type: object
+      properties:
+        zipCode:
+          type: string
+          description: Zip Code / Postal Code
+          nullable: true
+          example: G4D 2F1
+        businessType:
+          $ref: '#/components/schemas/BusinessTypeEnum'
+        businessName:
+          type: string
+          description: Business Name
+          nullable: true
+          example: Name of business
+      additionalProperties: false
+      description: General Information Response
+    InputNumberProperties:
+      type: object
+      properties:
+        placeholder:
+          type: string
+          description: Placeholder
+          nullable: true
+          example: '15414'
+        minimum:
+          type: number
+          description: Minimum
+          format: double
+          nullable: true
+          example: 1
+        maximum:
+          type: number
+          description: Maximum
+          format: double
+          nullable: true
+          example: 100
+        disabled:
+          type: boolean
+          description: Disabled
+          nullable: true
+          example: true
+      additionalProperties: false
+      description: Input number properties
+    InputProperties:
+      type: object
+      properties:
+        placeholder:
+          type: string
+          description: Placeholder
+          nullable: true
+          example: Placeholder
+        disabled:
+          type: boolean
+          description: Disabled
+          nullable: true
+          example: true
+      additionalProperties: false
+      description: Input properties
+    IntervalType:
+      enum:
+        - Month
+        - Year
+        - Week
+        - Day
+      type: string
+      description: Frequency type
+    InvoiceDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          nullable: true
+        date:
+          type: string
+          description: Date
+          format: date-with-time
+          example: '2022-01-17T13:16:42.3032625+03:00'
+        package:
+          type: string
+          description: Package
+          nullable: true
+          example: Premium
+        periodStart:
+          type: string
+          description: PeriodStart
+          format: date-with-time
+          example: '2022-01-17T13:16:42.3042549+03:00'
+        periodEnd:
+          type: string
+          description: PeriodEnd
+          format: date-with-time
+          example: '2022-01-17T13:16:42.3046044+03:00'
+        amount:
+          type: number
+          description: Amount
+          format: double
+          example: 100
+        document:
+          $ref: '#/components/schemas/DocumentDto'
+      additionalProperties: false
+      description: InvoiceDto
+    ListFoldersResponse:
+      required:
+        - folders
+      type: object
+      properties:
+        haveNoWorkflows:
+          type: boolean
+          description: Have No Workflows
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Folder'
+          description: Folders
+      additionalProperties: false
+      description: List Folders Response
+    ListWorkflowsResponse:
+      type: object
+      properties:
+        workflows:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowShortInfo'
+          description: Forms
+          nullable: true
+          example:
+            - Id: 8F2E49FB-6C57-4F8C-8CC2-A560BC5B64CF
+              Name: New Patient Registration Form
+      additionalProperties: false
+      description: List workflows response
+    MaskedInputProperties:
+      required:
+        - mask
+      type: object
+      properties:
+        mask:
+          type: string
+          description: Mask
+        disabled:
+          type: boolean
+          description: Disabled
+          nullable: true
+          example: true
+      additionalProperties: false
+      description: Masked Input Properties
+    MoveToFolderRequest:
+      required:
+        - folderId
+        - workflowIds
+      type: object
+      properties:
+        folderId:
+          type: string
+          description: Id of folder
+          format: uuid
+        workflowIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Workflow ids for move
+      additionalProperties: false
+      description: Move To Folder Request
+    OptionItem:
+      required:
+        - label
+        - value
+      type: object
+      properties:
+        label:
+          type: string
+          description: Label
+          example: Label
+        value:
+          type: string
+          description: Value
+          example: Value
+        order:
+          type: integer
+          description: Order
+          format: int32
+          example: 0
+      additionalProperties: false
+      description: Option item
+    Package:
+      required:
+        - imageUrl
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of package
+          example: Premium
+        priceId:
+          type: string
+          description: Id of price
+          format: uuid
+        price:
+          type: number
+          description: Price
+          format: double
+          example: 100
+        includeTrial:
+          type: boolean
+          description: Include trial period flag
+          example: true
+        imageUrl:
+          type: string
+          description: Image url
+          example: https://svgshare.com/i/dJn.svg
+        interval:
+          $ref: '#/components/schemas/IntervalType'
+        intervalCount:
+          type: integer
+          description: >-
+            The number of intervals between subscription billings. For example,
+            interval=month and interval_count=3 bills every 3 months.
+          format: int32
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/Feature'
+          description: Available features
+          nullable: true
+      additionalProperties: false
+      description: Package model
+    PaginationRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Page
+          format: int32
+          nullable: true
+          example: 1
+        limit:
+          type: integer
+          description: Limit
+          format: int32
+          nullable: true
+          example: 10
+      additionalProperties: false
+      description: Pagination Request
+    PaginationResponse:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Page
+          format: int32
+          nullable: true
+          example: 1
+        limit:
+          type: integer
+          description: Limit
+          format: int32
+          nullable: true
+          example: 10
+        total:
+          type: integer
+          description: Total
+          format: int32
+          example: 100
+      additionalProperties: false
+      description: Pagination Response
+    ParagraphProperties:
+      type: object
+      properties:
+        alignment:
+          $ref: '#/components/schemas/AlignmentType'
+        text:
+          type: string
+          description: Text
+          nullable: true
+          example: example text
+      additionalProperties: false
+      description: Paragraph properties
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of payment method
+          format: uuid
+        last4:
+          type: string
+          description: The last four digits of the card.
+          nullable: true
+          example: '4242'
+        expMonth:
+          type: integer
+          description: Two-digit number representing the card’s expiration month.
+          format: int64
+          nullable: true
+          example: 8
+        expYear:
+          type: integer
+          description: Four-digit number representing the card’s expiration year.
+          format: int64
+          nullable: true
+          example: 2023
+        fullName:
+          type: string
+          description: Name on card
+          nullable: true
+          example: Becky Oliver
+      additionalProperties: false
+      description: Payment method
+    PaymentMethodsInformation:
+      type: object
+      properties:
+        defaultPaymentMethodId:
+          type: string
+          description: Id of default payment method
+          format: uuid
+          nullable: true
+        paymentMethods:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
+          description: All payment methods
+          nullable: true
+      additionalProperties: false
+      description: PaymentM methods information
+    PhoneInputProperties:
+      required:
+        - mask
+      type: object
+      properties:
+        mask:
+          type: string
+          description: Mask
+          example: (111)111-1111
+        prefix:
+          type: string
+          description: Prefix
+          nullable: true
+          example: '+1'
+        disabled:
+          type: boolean
+          description: Disabled
+          nullable: true
+          example: true
+      additionalProperties: false
+      description: Phone input properties
+    PrintedAddress:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          nullable: true
+          example: string id
+        address:
+          type: string
+          description: Address
+          nullable: true
+          example: 123 Anystreet Road
+      additionalProperties: false
+      description: Printed Address
+    PublishTemplateResponse:
+      required:
+        - formBuilderData
+        - savedTemplateVersionShortInfo
+      type: object
+      properties:
+        savedTemplateVersionShortInfo:
+          $ref: '#/components/schemas/TemplateVersionShortInfo'
+        formBuilderData:
+          $ref: '#/components/schemas/FormBuilderData'
+      additionalProperties: false
+      description: Publish Template Response
+    PublishWorkflowRequest:
+      required:
+        - workflowIds
+      type: object
+      properties:
+        workflowIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Ids workflow for publish
+      additionalProperties: false
+      description: Publish Workflow Request
+    PublishWorkflowResponse:
+      required:
+        - formBuilderData
+        - savedWorkflowVersionShortInfo
+      type: object
+      properties:
+        savedWorkflowVersionShortInfo:
+          $ref: '#/components/schemas/WorkflowVersionShortInfo'
+        formBuilderData:
+          $ref: '#/components/schemas/FormBuilderData'
+      additionalProperties: false
+      description: Publish workflow response
+    RadioGroupProperties:
+      type: object
+      properties:
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/OptionItem'
+          description: Options
+          nullable: true
+        type:
+          $ref: '#/components/schemas/RadioGroupType'
+        disabled:
+          type: boolean
+          description: Disabled
+          nullable: true
+          example: true
+      additionalProperties: false
+      description: Radio group properties
+    RadioGroupType:
+      enum:
+        - Radio
+        - Button
+      type: string
+      description: Radio group type
+    Response200:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message
+          nullable: true
+          example: Successful operation
+      additionalProperties: false
+      description: Default response
+    ReviewBillingInformationResponse:
+      type: object
+      properties:
+        billingInformation:
+          $ref: '#/components/schemas/BillingInformation'
+        selectedPackage:
+          $ref: '#/components/schemas/Package'
+      additionalProperties: false
+      description: Review billing information response
+    Role:
+      enum:
+        - Guest
+        - Developer
+        - Client
+        - Member
+        - Administrator
+      type: string
+      description: Role for user
+    RuleItem:
+      type: object
+      properties:
+        required:
+          type: boolean
+          description: Required
+          nullable: true
+          example: true
+        type:
+          description: Type
+          nullable: true
+        message:
+          type: string
+          description: Message
+          nullable: true
+          example: Make your choice
+        validator:
+          description: Validator
+          nullable: true
+      additionalProperties: false
+      description: Rule item
+    SearchPaymentHistoryRequest:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/StripePaginationRequest'
+      additionalProperties: false
+      description: SearchPaymentHistoryRequest
+    SearchPaymentHistoryResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/StripePaginationResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceDto'
+          description: Data
+          nullable: true
+      additionalProperties: false
+      description: SearchPaymentHistoryResponse
+    SearchSubmissionRequest:
+      type: object
+      properties:
+        searchBy:
+          type: string
+          description: Property for search
+          nullable: true
+          example: first_name
+        search:
+          type: string
+          description: Search string
+          nullable: true
+          example: Bob
+        pagination:
+          $ref: '#/components/schemas/PaginationRequest'
+      additionalProperties: false
+      description: SearchSubmissionRequest
+    SearchSubmissionResponse:
+      type: object
+      properties:
+        searchBy:
+          type: string
+          description: Property for search
+          nullable: true
+          example: first_name
+        search:
+          type: string
+          description: Search string
+          nullable: true
+          example: Bob
+        pagination:
+          $ref: '#/components/schemas/PaginationResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubmissionDto'
+          description: Data
+          nullable: true
+      additionalProperties: false
+      description: SearchSubmissionResponse
+    SearchTemplateFilter:
+      enum:
+        - All
+        - ByUserSpecializations
+      type: string
+      description: List Template Option
+    SearchTemplatesRequest:
+      type: object
+      properties:
+        search:
+          type: string
+          description: Search
+          nullable: true
+          example: search string
+        filter:
+          $ref: '#/components/schemas/SearchTemplateFilter'
+      additionalProperties: false
+      description: Search Templates Request
+    SearchTemplatesResponse:
+      required:
+        - data
+      type: object
+      properties:
+        search:
+          type: string
+          description: Search
+          nullable: true
+          example: search string
+        filter:
+          $ref: '#/components/schemas/SearchTemplateFilter'
+        data:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/TemplateShortInfo'
+          description: Templates
+      additionalProperties: false
+      description: Search Templates Response
+    SearchWorkflowRequest:
+      type: object
+      properties:
+        search:
+          type: string
+          description: Search
+          nullable: true
+        workflowStatus:
+          $ref: '#/components/schemas/WorkflowStatus'
+        folderId:
+          type: string
+          description: Id of folder
+          format: uuid
+          nullable: true
+        sorting:
+          $ref: '#/components/schemas/WorkflowDtoColumnSorting'
+        pagination:
+          $ref: '#/components/schemas/PaginationRequest'
+      additionalProperties: false
+      description: Search Workflow Request
+    SearchWorkflowResponse:
+      required:
+        - data
+        - pagination
+      type: object
+      properties:
+        search:
+          type: string
+          description: Search
+          nullable: true
+        workflowStatus:
+          $ref: '#/components/schemas/WorkflowStatus'
+        folderId:
+          type: string
+          description: Id of folder
+          format: uuid
+          nullable: true
+        sorting:
+          $ref: '#/components/schemas/WorkflowDtoColumnSorting'
+        pagination:
+          $ref: '#/components/schemas/PaginationResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowDto'
+          description: Data
+      additionalProperties: false
+      description: Search Workflow Response
+    SelectProperties:
+      required:
+        - options
+      type: object
+      properties:
+        placeholder:
+          type: string
+          description: Placeholder
+          nullable: true
+          example: Select Item
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/OptionItem'
+          description: Options
+        disabled:
+          type: boolean
+          description: Disabled
+          nullable: true
+          example: true
+      additionalProperties: false
+      description: Select properties
+    Specialization:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of specialization
+          format: uuid
+        name:
+          type: string
+          description: Name of specialization
+          nullable: true
+          example: Dentistry
+      additionalProperties: false
+      description: Specialization
+    SpecializationsRequest:
+      required:
+        - selected
+      type: object
+      properties:
+        selected:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Selected specializations
+      additionalProperties: false
+      description: Specializations request
+    SpecializationsResponse:
+      required:
+        - specializations
+      type: object
+      properties:
+        specializations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Specialization'
+          description: All Specializations
+        selected:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Selected Specializations
+          nullable: true
+      additionalProperties: false
+      description: Specializations response
+    SsnProperties:
+      type: object
+      properties:
+        disabled:
+          type: boolean
+          description: Disabled
+          nullable: true
+          example: true
+      additionalProperties: false
+      description: Ssn Properties
+    Step:
+      enum:
+        - GeneralInformation
+        - Setup2Fa
+        - BillingInformation
+        - ReviewBillingInformation
+        - BusinessInformation
+        - BaaAgreement
+      type: string
+      description: Step
+    StripePaginationRequest:
+      required:
+        - startingAfter
+      type: object
+      properties:
+        startingAfter:
+          type: string
+          description: >-
+            A cursor for use in pagination. starting_after is an object ID that
+            defines your place in the list. For instance, if you make a list
+            request and receive 100 objects, ending with obj_foo, your
+            subsequent call can include starting_after=obj_foo in order to fetch
+            the next page of the list.
+      additionalProperties: false
+      description: StripePaginationRequest
+    StripePaginationResponse:
+      type: object
+      properties:
+        hasMore:
+          type: boolean
+          description: >-
+            Whether or not there are more elements available after this set. If
+            false, this set comprises the end of the list.
+      additionalProperties: false
+      description: Stripe Pagination Response
+    SubmissionDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of submission
+          format: uuid
+        ipAddress:
+          type: string
+          description: Ip Address
+          nullable: true
+        createdAt:
+          type: string
+          description: CreatedAt
+          format: date-with-time
+          example: '2022-01-17T13:16:42.3791750+03:00'
+      additionalProperties: false
+      description: SubmissionDto
+    Subscription:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/SubscriptionStatus'
+        startDate:
+          type: string
+          description: >-
+            Date when the subscription was first created. The date might differ
+            from the created date due to backdating.
+          format: date-with-time
+          nullable: true
+          example: '2022-01-17T13:16:42.3888230+03:00'
+        currentPeriodStart:
+          type: string
+          description: >-
+            Start of the current period that the subscription has been invoiced
+            for.
+          format: date-with-time
+          nullable: true
+          example: '2022-01-17T13:16:42.3891537+03:00'
+        currentPeriodEnd:
+          type: string
+          description: >-
+            End of the current period that the subscription has been invoiced
+            for. At the end of this period, a new invoice will be created.
+          format: date-with-time
+          nullable: true
+          example: '2022-01-17T13:16:42.3894568+03:00'
+        cancelAt:
+          type: string
+          description: >-
+            A date in the future at which the subscription will automatically
+            get canceled
+          format: date-with-time
+          nullable: true
+          example: '2022-01-17T13:16:42.3897586+03:00'
+        cancelAtPeriodEnd:
+          type: boolean
+          description: >-
+            You can use this attribute to determine whether a subscription that
+            has a status of active is scheduled to be canceled at the end of the
+            current period.
+        canceledAt:
+          type: string
+          description: >-
+            If the subscription has been canceled, the date of that
+            cancellation. If the subscription was canceled with
+            cancel_at_period_end, canceled_at will reflect the time of the most
+            recent update request, not the end of the subscription period when
+            the subscription is automatically moved to a canceled state.
+          format: date-with-time
+          nullable: true
+          example: '2022-01-17T13:16:42.3904906+03:00'
+        trialStart:
+          type: string
+          description: If the subscription has a trial, the beginning of that trial.
+          format: date-with-time
+          nullable: true
+          example: '2022-01-17T13:16:42.3908099+03:00'
+        trialEnd:
+          type: string
+          description: If the subscription has a trial, the end of that trial.
+          format: date-with-time
+          nullable: true
+          example: '2022-01-17T13:16:42.3911498+03:00'
+      additionalProperties: false
+      description: Subscription
+    SubscriptionInformation:
+      required:
+        - currentPackage
+        - paymentMethodsInformation
+        - subscription
+      type: object
+      properties:
+        subscription:
+          $ref: '#/components/schemas/Subscription'
+        currentPackage:
+          $ref: '#/components/schemas/Package'
+        paymentMethodsInformation:
+          $ref: '#/components/schemas/PaymentMethodsInformation'
+      additionalProperties: false
+      description: Subscription Info
+    SubscriptionStatus:
+      enum:
+        - Incomplete
+        - IncompleteExpired
+        - Trialing
+        - Active
+        - PastDue
+        - Canceled
+        - Unpaid
+      type: string
+      description: Subscription Status
+    TeamRequest:
+      type: object
+      properties:
+        search:
+          type: string
+          description: Search
+          nullable: true
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserStatus'
+          description: Status filter
+          nullable: true
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+          description: Role filter
+          nullable: true
+        pagination:
+          $ref: '#/components/schemas/PaginationRequest'
+      additionalProperties: false
+      description: Team Request
+    TeamResponse:
+      type: object
+      properties:
+        search:
+          type: string
+          description: Search
+          nullable: true
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserStatus'
+          description: Status filter
+          nullable: true
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+          description: Role filter
+          nullable: true
+        pagination:
+          $ref: '#/components/schemas/PaginationResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+          description: Data
+          nullable: true
+      additionalProperties: false
+      description: TeamResponse
+    TemplateDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of template
+          format: uuid
+        title:
+          type: string
+          description: Title of template
+          nullable: true
+        isPublished:
+          type: boolean
+          description: Is Published
+      additionalProperties: false
+      description: Template Dto
+    TemplateShortInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of template
+          format: uuid
+        imageUrl:
+          type: string
+          description: Image Url
+          nullable: true
+        name:
+          type: string
+          description: Name of template
+          nullable: true
+          example: New patient registration form
+      additionalProperties: false
+      description: Template short info
+    TemplateVersionShortInfo:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title
+          nullable: true
+          example: Example title
+        versionId:
+          type: string
+          description: Id of version
+          format: uuid
+        createdAt:
+          type: string
+          description: Date of creation of the version
+          format: date-with-time
+          example: '2022-01-17T13:16:42.3559590+03:00'
+      additionalProperties: false
+      description: Template Version Short Info
+    TextareaProperties:
+      type: object
+      properties:
+        placeholder:
+          type: string
+          description: Placeholder
+          nullable: true
+          example: example text
+        rows:
+          type: integer
+          description: Number of rows
+          format: int32
+          nullable: true
+          example: 6
+        disabled:
+          type: boolean
+          description: Disabled
+          nullable: true
+          example: true
+      additionalProperties: false
+      description: Textarea properties
+    TitleProperties:
+      type: object
+      properties:
+        alignment:
+          $ref: '#/components/schemas/AlignmentType'
+        heading:
+          type: integer
+          description: Heading
+          format: int32
+          nullable: true
+          example: 1
+        text:
+          type: string
+          description: Text
+          nullable: true
+          example: Title
+      additionalProperties: false
+      description: Title properties
+    UnarchiveWorkflowRequest:
+      required:
+        - workflowIds
+      type: object
+      properties:
+        workflowIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Ids workflow for unarchive
+      additionalProperties: false
+      description: Unarchive Workflow Request
+    UnpublishWorkflowRequest:
+      required:
+        - workflowIds
+      type: object
+      properties:
+        workflowIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Ids workflow for unpublish
+      additionalProperties: false
+      description: Unpublish Workflow Request
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of user
+          format: uuid
+        userName:
+          type: string
+          description: Username
+          nullable: true
+        role:
+          $ref: '#/components/schemas/Role'
+        status:
+          $ref: '#/components/schemas/UserStatus'
+      additionalProperties: false
+      description: UserDto
+    UserStatus:
+      enum:
+        - Active
+        - InviteSent
+        - Suspended
+      type: string
+      description: UserStatus
+    WorkflowDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of workflow
+          format: uuid
+        title:
+          type: string
+          description: Title of workflow
+          nullable: true
+          example: Title
+        updatedAt:
+          type: string
+          description: Last updated date
+          format: date-with-time
+          example: '2022-01-17T13:16:42.3642763+03:00'
+        workflowStatus:
+          $ref: '#/components/schemas/WorkflowStatus'
+        publishedAt:
+          type: string
+          description: Date of published
+          format: date-with-time
+          nullable: true
+          example: '2022-01-17T13:16:42.3647690+03:00'
+        archivedAt:
+          type: string
+          description: Date of archived
+          format: date-with-time
+          nullable: true
+          example: '2022-01-17T13:16:42.3651201+03:00'
+        submissions:
+          type: integer
+          description: Count of submissions
+          format: int32
+          nullable: true
+          example: 5
+      additionalProperties: false
+      description: Workflow Dto
+    WorkflowDtoColumn:
+      enum:
+        - UpdatedAt
+        - PublishedAt
+        - Submissions
+      type: string
+      description: Workflow Dto Column
+    WorkflowDtoColumnSorting:
+      required:
+        - column
+        - direction
+      type: object
+      properties:
+        column:
+          $ref: '#/components/schemas/WorkflowDtoColumn'
+        direction:
+          $ref: '#/components/schemas/DirectionType'
+      additionalProperties: false
+      description: ''
+    WorkflowShortInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of workflow
+          format: uuid
+          example: BA9D7FCB-69FE-4770-B81C-E77954DC4FA5
+        name:
+          type: string
+          description: Name of workflow
+          nullable: true
+          example: New Patient Registration Form
+      additionalProperties: false
+      description: FormShortInfo
+    WorkflowStatus:
+      enum:
+        - Draft
+        - Published
+        - Archived
+      type: string
+      description: Workflow Status
+    WorkflowVersionShortInfo:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title
+          nullable: true
+          example: Example title
+        versionId:
+          type: string
+          description: Id of version
+          format: uuid
+        createdAt:
+          type: string
+          description: Date of creation of the version
+          format: date-with-time
+          example: '2022-01-17T13:16:42.3420055+03:00'
+      additionalProperties: false
+      description: Workflow version short info
+  securitySchemes:
+    Authorization:
+      type: http
+      description: Specify the authorization token.
+      scheme: bearer
+      bearerFormat: JWT
